@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('nomor_hp_ayah');
             $table->string('nomor_hp_ibu');
             $table->string('pilih_referensi');
-            $table->boolean('pembayaran')->default(false);
             $table->string('nama_bank')->nullable();
             $table->string('pemilik_rekening')->nullable();
             $table->string('nominal')->nullable();

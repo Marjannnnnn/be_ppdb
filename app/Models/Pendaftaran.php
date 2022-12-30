@@ -25,7 +25,6 @@ class Pendaftaran extends Model
         'pemilik_rekening',
         'nominal',
         'foto',
-        'tervalidasi',
-        'pembayaran'
+        'tervalidasi'
     ];
 }

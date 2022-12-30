@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('role', ['student', 'admin'])->default('student');
             $table->string('email')->unique();
             $table->string('password');
+            $table->enum('tervalidasi', ['diterima', 'ditolak'])->nullable();
+            $table->boolean('pembayaran')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

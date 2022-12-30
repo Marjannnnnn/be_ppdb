@@ -104,9 +104,12 @@ class PendaftaranController extends Controller
             'pemilik_rekening' => $request->input('pemilik_rekening'),
             'nominal' => $request->input('nominal'),
             'foto' => $url,
-            'pembayaran' => true
+            'tervalidasi' => null
         ]);
 
+        $user = User::where('id', $pendaftaran->id)->first();
+        $user->update(['pembayaran' => true]);
+        $user->update(['tervalidasi' => null]);
 
         return response()->json($pendaftaran, 200);
     }
@@ -122,11 +125,21 @@ class PendaftaranController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
+        $tervalidasi = $request->input('tervalidasi');
+        $pembayaran = $tervalidasi === "diterima" ? true : false;
+
         $pendaftaran->update([
-            'tervalidasi' => $request->input('tervalidasi'),
+            'tervalidasi' => $tervalidasi,
         ]);
 
-        return response()->json($pendaftaran, 200);
+        $user = User::where('id', $pendaftaran->id)->first();
+
+        $user->update([
+            'tervalidasi' => $tervalidasi,
+            'pembayaran' => $pembayaran,
+        ]);
+
+        return response()->json(['tervalidasi' => $tervalidasi, 'pembayaran' => $pembayaran], 200);
     }
 
     public function delete(Pendaftaran $id)
